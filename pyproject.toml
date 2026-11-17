@@ -1,0 +1,38 @@
+[project]
+name = "domain-chatbot"
+version = "0.1.0"
+description = "Domain chatbot on FastAPI with Markdown knowledge and SQLite chat storage"
+requires-python = ">=3.12"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "BLE", "SIM", "RUF", "ASYNC"]
+ignore = ["RUF001", "RUF002", "RUF003"]  # Indic text and typographic characters are intentional
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "S108"]
+"scripts/**" = ["T201"]
+"app/ui/strings.py" = ["E501"]  # translation tables
+"app/ui/components.py" = ["E501"]  # embedded CSS
+
+[tool.mypy]
+python_version = "3.12"
+files = ["app"]
+strict = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["google.*", "yaml"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q --strict-markers"
+filterwarnings = ["error"]
+
+[tool.coverage.run]
+source = ["app"]
+branch = true
